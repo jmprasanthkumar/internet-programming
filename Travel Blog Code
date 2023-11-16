@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Travel Blog</title>
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        /* Reset some default styles */
+        body, h1, h2, h3, p {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f7f7f7;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 1em;
+        }
+
+        nav {
+            margin-top: 10px;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+            font-size: 16px;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #ffd700;
+        }
+
+        main {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        p {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .article {
+            border-bottom: 1px solid #ccc;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .article:hover {
+            transform: scale(1.02);
+        }
+
+        h3 {
+            color: #333;
+        }
+
+        img {
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .article:hover img {
+            transform: scale(1.1);
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 15px;
+            background-color: #333;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        a:hover {
+            background-color: #555;
+        }
+
+        /* Map Container */
+        #map {
+            height: 300px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        /* Photo Gallery */
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .gallery img {
+            width: calc(33.33% - 10px);
+            border-radius: 8px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .gallery img:hover {
+            transform: scale(1.1);
+        }
+
+        /* Comments Section */
+        .comments {
+            margin-top: 20px;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            resize: vertical;
+        }
+
+        /* About Page Styling */
+        .bio {
+            text-align: center;
+        }
+
+        .bio img {
+            border-radius: 50%;
+            max-width: 150px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Your Travel Blog</h1>
+        <nav>
+            <a href="#home">Home</a>
+            <a href="#destinations">Destinations</a>
+            <a href="#about">About</a>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Home Page -->
+        <div id="home">
+            <h2>Welcome to Our Travel Blog</h2>
+            <div class="article">
+                <h3>Exploring the Himalayas</h3>
+                <img src="himalayas.jpg" alt="Himalayan View">
+                <p>Discover the breathtaking beauty of the Himalayan landscapes. From challenging treks to serene moments, our journey through the Himalayas will leave you inspired.</p>
+                <a href="#">Read more</a>
+            </div>
+
+            <div class="article">
+                <h3>A Glimpse of Rajasthan</h3>
+                <img src="rajasthan.jpg" alt="Rajasthan Culture">
+                <p>Immerse yourself in the vibrant culture of Rajasthan. From historic forts to colorful festivals, join us on a cultural adventure in the heart of India.</p>
+                <a href="#">Read more</a>
+            </div>
+        </div>
+
+        <!-- Destinations Page -->
+        <div id="destinations">
+            <h2>Explore Our Destinations</h2>
+            <ul>
+                <li>
+                    <h3>Goa Beaches</h3>
+                    <img src="goa.jpg" alt="Goa Beach">
+                    <p>Relax on the beautiful beaches of Goa. Enjoy the sun, sand, and vibrant nightlife that makes Goa a perfect destination for every traveler.</p>
+                    <a href="#">Read more</a>
+                </li>
+
+                <li>
+                    <h3>Varanasi Spiritual Journey</h3>
+                    <img src="varanasi.jpg" alt="Varanasi Ghats">
+                    <p>Experience the spiritual aura of Varanasi. Witness the Ganga Aarti and explore the ancient ghats that hold centuries of history and tradition.</p>
+                    <a href="#">Read more</a>
+                </li>
+
+                <li>
+                    <h3>Majestic Jaipur</h3>
+                    <img src="jaipur.jpg" alt="Jaipur City Palace">
+                    <p>Marvel at the majestic architecture of Jaipur. From the City Palace to Hawa Mahal, Jaipur offers a royal experience for every traveler.</p>
+                    <a href="#">Read more</a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Interactive Map -->
+        <div id="map"></div>
+
+        <!-- Photo Galleries -->
+        <div class="gallery">
+            <img src="gallery1.jpg" alt="Gallery Image 1">
+            <img src="gallery2.jpg" alt="Gallery Image 2">
+            <img src="gallery3.jpg" alt="Gallery Image 3">
+        </div>
+
+        <!-- User Comments and Engagement -->
+        <div class="comments">
+            <h2>Join the Conversation</h2>
+            <textarea placeholder="Leave a comment..."></textarea>
+            <button>Submit</button>
+        </div>
+
+        <!-- About Page -->
+        <div id="about">
+            <h2>About Us</h2>
+            <div class="bio">
+                <img src="team.jpg" alt="Travel Blog Team">
+                <p>Welcome to our travel blog! We are a group of passionate explorers who love to share our adventures with fellow travel enthusiasts. Our goal is to inspire and guide you through the diverse landscapes and cultures that our beautiful world has to offer.</p>
+
+                <p>Meet the Team:</p>
+
+                <div class="team-member">
+                    <img src="member1.jpg" alt="Team Member 1">
+                    <h3>Ravi Kumar</h3>
+                    <p>Founder & Lead Explorer</p>
+                    <p>Ravi is a seasoned traveler with a deep love for exploring the cultural heritage of India. His goal is to showcase the beauty and diversity of Indian destinations.</p>
+                </div>
+
+                <div class="team-member">
+                    <img src="member2.jpg" alt="Team Member 2">
+                    <h3>Priya Patel</h3>
+                    <p>Cultural Enthusiast</p>
+                    <p>Priya is passionate about immersing herself in the rich traditions and customs of different Indian regions. She enjoys sharing stories of cultural experiences.</p>
+                </div>
+
+                <div class="team-member">
+                    <img src="member3.jpg" alt="Team Member 3">
+                    <h3>Anand Gupta</h3>
+                    <p>Adventure Photographer</p>
+                    <p>Anand captures the essence of our journeys through his lens. His stunning photographs bring the travel stories to life, capturing the spirit of India.</p>
+                </div>
+
+                <p>Join us on this exciting journey, and let's explore the incredible beauty of India together!</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Leaflet Library for Map -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Sample data for markers (Indian cities)
+            var locations = [
+                { lat: 28.6139, lon: 77.2090, title: "New Delhi" },
+                { lat: 19.0760, lon: 72.8777, title: "Mumbai" },
+                { lat: 12.9716, lon: 77.5946, title: "Bengaluru" },
+                // Add more Indian cities as needed
+            ];
+
+            // Initialize the map centered on India
+            var map = L.map('map').setView([20.5937, 78.9629], 5);
+
+            // Add the base map layer (OpenStreetMap)
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
+
+            // Add markers to the map based on the sample data
+            locations.forEach(function (location) {
+                L.marker([location.lat, location.lon]).addTo(map)
+                    .bindPopup(location.title);
+            });
+        });
+    </script>
+</body>
+
+</html>
